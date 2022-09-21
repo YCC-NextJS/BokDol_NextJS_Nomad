@@ -12,14 +12,11 @@ const NavBar = () => {
         <a className={router.pathname === "/about" ? "active" : null}>About</a>
       </Link>
       <style jsx>{`
-        nav {
-          background-color: tomato;
-        }
         a {
           text-decoration: none;
         }
         .active {
-          color: blue;
+          color: tomato;
         }
       `}</style>
     </nav>
