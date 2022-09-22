@@ -6,7 +6,7 @@ import Seo from "./Seo";
 const about = () => {
   return (
     <>
-      <Seo />
+      <Seo title="about" />
       <div>about</div>
     </>
   );

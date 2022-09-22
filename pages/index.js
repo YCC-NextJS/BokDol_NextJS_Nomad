@@ -14,18 +14,18 @@ export default function Home({ response }) {
   const onClick = (id, title, image) => {
     router.push(
       {
-        pathname: `/movies/${id}`,
+        pathname: `/movies/${title}/${id}`,
         query: {
           title: title,
           image: `https://image.tmdb.org/t/p/w500/${image}`,
         },
       },
-      `/movies/${id}`
+      `/movies/${title}/${id}`
     );
   };
   return (
     <div className="container">
-      <Seo />
+      <Seo title="Home" />
       {movies.map((movie) => (
         <div
           className="movie"
@@ -38,13 +38,13 @@ export default function Home({ response }) {
           <Link
             key={movie.id}
             href={{
-              pathname: `/movies/${movie.id}`,
+              pathname: `/movies/${movie.original_title}/${movie.id}`,
               query: {
                 title: movie.title,
                 image: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
               },
             }}
-            as={`/movies/${movie.id}`}
+            as={`/movies/${movie.original_title}/${movie.id}`}
           >
             <a>
               <h4>{movie.original_title}</h4>
