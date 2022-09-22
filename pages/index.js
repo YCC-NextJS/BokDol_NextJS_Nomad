@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Seo from "./Seo";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function Home({ response }) {
   // const fetch = async () => {
@@ -8,6 +9,8 @@ export default function Home({ response }) {
   // };
   // fetch();
   const [movies, setMovies] = useState(response);
+  const router = useRouter();
+  console.log(router);
   return (
     <div className="container">
       <Seo />
