@@ -2,24 +2,16 @@ import { useEffect, useState } from "react";
 import Seo from "./Seo";
 import axios from "axios";
 
-export default function Home() {
-  const [movies, setMovies] = useState();
-
-  useEffect(() => {
-    const fetch = async () => {
-      const response = await axios.get("/api/movies");
-      setMovies(response.data.results);
-      console.log(response.data.results);
-    };
-
-    fetch();
-  }, []);
-
+export default function Home({ response }) {
+  // const fetch = async () => {
+  //   console.log(response);
+  // };
+  // fetch();
+  const [movies, setMovies] = useState(response);
   return (
     <div className="container">
       <Seo />
-      {!movies && <h4>Loading...</h4>}
-      {movies?.map((movie) => (
+      {movies.map((movie) => (
         <div className="movie" key={movie.id}>
           <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
 
@@ -49,4 +41,17 @@ export default function Home() {
       `}</style>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  let response = {};
+  await axios.get("http://localhost:3000/api/movies").then((res) => {
+    response = res.data.results;
+  });
+
+  return {
+    props: {
+      response,
+    },
+  };
 }
