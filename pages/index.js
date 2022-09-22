@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Seo from "./Seo";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Home({ response }) {
   // const fetch = async () => {
@@ -10,15 +11,45 @@ export default function Home({ response }) {
   // fetch();
   const [movies, setMovies] = useState(response);
   const router = useRouter();
-  console.log(router);
+  const onClick = (id, title, image) => {
+    router.push(
+      {
+        pathname: `/movies/${id}`,
+        query: {
+          title: title,
+          image: `https://image.tmdb.org/t/p/w500/${image}`,
+        },
+      },
+      `/movies/${id}`
+    );
+  };
   return (
     <div className="container">
       <Seo />
       {movies.map((movie) => (
-        <div className="movie" key={movie.id}>
+        <div
+          className="movie"
+          key={movie.id}
+          onClick={() => {
+            onClick(movie.id, movie.title, movie.poster_path);
+          }}
+        >
           <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
-
-          <h4>{movie.original_title}</h4>
+          <Link
+            key={movie.id}
+            href={{
+              pathname: `/movies/${movie.id}`,
+              query: {
+                title: movie.title,
+                image: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+              },
+            }}
+            as={`/movies/${movie.id}`}
+          >
+            <a>
+              <h4>{movie.original_title}</h4>
+            </a>
+          </Link>
         </div>
       ))}
       <style jsx>{`
